@@ -7,15 +7,12 @@ STATICDIR = static
 STATIC    = $(shell find $(STATICDIR) -name "*.*" -not -name ".*" 2> /dev/null)
 STATICDEST= $(subst $(STATICDIR),$(DISTDIR),$(STATIC))
 
-$(warning $(STATIC))
-$(warning $(STATICDEST))
-
 .PHONY: copy
 default: copy
 
-${STATICDEST}: ${STATIC}
+${STATICDEST}:
 	@mkdir -p $(shell dirname $@)
-	cp $< $@
+	cp $(subst $(DISTDIR),$(STATICDIR),$@) $@
 
 copy: ${STATICDEST}
 
